@@ -8,11 +8,56 @@ class RealEstateGame:
 
     def __init__(self):
         self._game_board = []
+        self._players = {}
 
     def create_spaces(self, go_money, rents):
         """ creates the game spaces for properties and rent, with the amount players receive on landing/passing go """
+        count = 0
+        go = Property("GO", go_money)
+        self._game_board.append(go)
+        for rent in rents:
+            count += 1
+            space = Property(count, rent)
+            self._game_board.append(space)
 
-        self._game_board.append("GO")
+    def create_player(self, name, balance):
+        """ adds to the player dict a Player object with the name as they key and the Player object as the value """
+        self._players[name] = Player(name, balance)
+
+
+    def get_player_account_balance(self, name):
+        """ this method will take as a parameter a player name and return that players account balance. This will
+        happen via calling to the Player class and using the get_balance method to get that data member."""
+        pass
+
+    def get_player_current_position(self, name):
+        """ this method similar to the above will use a given player's name and call to the Plaayer class object and
+        using the get_position method it will return back the integer position on the board of that player. """
+        pass
+
+    def buy_space(self, name):
+        """ using the name of a player this method will allow that player to buy the property object of the index they
+        are currently on. It will allow this to happen only after it checks that the property has no owner, the player
+        has the available balance that is greater to the cost of the property. Then this will deduct the amount from
+        their account, and add them as the owner of the property by interacting with the Property class and using
+        the setter method. If this all is able to occur it return True, else False."""
+        pass
+
+    def move_player(self, name, roll_num):
+        """ This method will allow a player to move on the game-board. First this will check is the account balance
+        of the player 0, if it is it will return. We will make sure the given integer is between 1 and 6. It will
+        increase the index the player is on by that given integer. It will need to check if the number will exceed 25
+        if it does it will circle back to the 0 index and increase the players account balance by the appropriate
+        amount. Then when the player gets to their new spot it will check to see if that spot's property is owned,
+        if it is the player will owe money to the player associated with that property in the correct amount. If the
+        player's balance would reduce to 0 or below, then that player will become in active."""
+        pass
+
+    def check_game_over(self):
+        """ This method will check if the game is over by seeing is there is only one player left as active with
+        more than 0 in their account balance. If this is the case then this method will return the winning player's
+        name. If not then it will return an empty string. """
+        pass
 
 
 class Player:
@@ -23,6 +68,10 @@ class Player:
         self._balance = initial_balance
         self._properties = {}
         self._position = 0
+
+    def get_name(self):
+        """ returns the player's name """
+        return self._name
 
     def get_balance(self):
         """ returns player's balance """
@@ -68,3 +117,6 @@ game = RealEstateGame()
 rents = [50, 50, 50, 75, 75, 75, 100, 100, 100, 150, 150, 150, 200, 200, 200, 250, 250, 250, 300, 300, 300, 350, 350,
          350]
 game.create_spaces(50, rents)
+game.create_player("Player 1", 1000)
+game.create_player("Player 2", 1000)
+game.create_player("Player 3", 1000)
