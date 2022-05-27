@@ -26,14 +26,15 @@ class RealEstateGame:
 
 
     def get_player_account_balance(self, name):
-        """ this method will take as a parameter a player name and return that players account balance. This will
-        happen via calling to the Player class and using the get_balance method to get that data member."""
-        pass
+        """ Returns the account balance of the player that matches the name parameter """
+        target = self._players[name]
+        return target.get_balance()
 
     def get_player_current_position(self, name):
-        """ this method similar to the above will use a given player's name and call to the Plaayer class object and
-        using the get_position method it will return back the integer position on the board of that player. """
-        pass
+        """ this method similar to the above will use a given player's name and call to the Player class object and
+        using the get_position method it will return the integer position on the board of that player. """
+        target = self._players[name]
+        return target.get_name()
 
     def buy_space(self, name):
         """ using the name of a player this method will allow that player to buy the property object of the index they
@@ -41,7 +42,17 @@ class RealEstateGame:
         has the available balance that is greater to the cost of the property. Then this will deduct the amount from
         their account, and add them as the owner of the property by interacting with the Property class and using
         the setter method. If this all is able to occur it return True, else False."""
-        pass
+        target = self._players[name]
+        position = target.get_position()
+        real_estate = self._game_board[position]
+        if target.get_balance() > real_estate.get_cost():
+            real_estate.set_owner(name)  # changes owner of the property to the player
+            new_bal = target.get_balance() - real_estate.get_cost()
+            target.set_balance(new_bal)
+            return True
+        else:
+            return False
+
 
     def move_player(self, name, roll_num):
         """ This method will allow a player to move on the game-board. First this will check is the account balance
@@ -76,6 +87,10 @@ class Player:
     def get_balance(self):
         """ returns player's balance """
         return self._balance
+
+    def set_balance(self, balance):
+        """ sets the players account balance to the given amount """
+        self._balance = balance
 
     def get_properties(self):
         """ returns player's properties """
@@ -120,3 +135,4 @@ game.create_spaces(50, rents)
 game.create_player("Player 1", 1000)
 game.create_player("Player 2", 1000)
 game.create_player("Player 3", 1000)
+game.get_player_account_balance("Player 2")
