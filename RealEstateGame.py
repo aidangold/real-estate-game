@@ -26,7 +26,6 @@ class RealEstateGame:
         """ adds to the player dict a Player object with the name as they key and the Player object as the value """
         self._players[name] = Player(name, balance)
 
-
     def get_player_account_balance(self, name):
         """ Returns the account balance of the player that matches the name parameter """
         target = self._players[name]
@@ -55,7 +54,6 @@ class RealEstateGame:
         else:
             return False
 
-
     def move_player(self, name, roll_num):
         """ This method will allow a player to move on the game-board. First this will check is the account balance
         of the player 0, if it is it will return. We will make sure the given integer is between 1 and 6. It will
@@ -70,7 +68,7 @@ class RealEstateGame:
         if 1 <= roll_num <= 6:  # verifies the number is on a 6 sided die
             current = target.get_position()
             new_pos = current + roll_num
-            if new_pos > 25:    # when position would exceed the length of the game board, we circle to the front
+            if new_pos > 25:  # when position would exceed the length of the game board, we circle to the front
                 new_pos = new_pos - 26
                 account = target.get_balance()
                 target.set_balance(account + self._go_money)
@@ -78,7 +76,7 @@ class RealEstateGame:
             position = target.get_position()
             real_estate = self._game_board[position]
             if real_estate.get_owner() is not None:
-                #owner_name = real_estate.get_owner()
+                # owner_name = real_estate.get_owner()
                 tenant = target
                 tenant_bal = tenant.get_balance()
                 owner = self._players[real_estate.get_owner()]
@@ -91,18 +89,22 @@ class RealEstateGame:
                         if listing.get_owner() == tenant.get_name():
                             listing.set_owner(None)
 
-
-
-
-
-
-
-
     def check_game_over(self):
         """ This method will check if the game is over by seeing is there is only one player left as active with
         more than 0 in their account balance. If this is the case then this method will return the winning player's
         name. If not then it will return an empty string. """
-        pass
+        names = self._players.keys()
+        losers = []
+        winner = []
+        for name in names:
+            if self._players[name].get_balance() <= 0:
+                losers.append(name)
+            if self._players[name].get_balance() > 0:
+                winner.append(name)
+        if len(winner) == 1:
+            return winner[0]
+        else:
+            print("")
 
 
 class Player:
@@ -142,6 +144,7 @@ class Player:
         """ sets the position of the player to a new value """
         self._position = new_pos
 
+
 class Property:
     """ class to represent each property object that will be bought and used on spaces """
 
@@ -174,16 +177,37 @@ class Property:
 
 game = RealEstateGame()
 
-rents = [50, 50, 50, 75, 75, 75, 100, 100, 100, 150, 150, 150, 200, 200, 200, 250, 250, 250, 300, 300, 300, 350, 350, 350]
+rents = [50, 50, 50, 75, 75, 75, 100, 100, 100, 150, 150, 150, 200, 200, 200, 250, 250, 250, 300, 300, 300, 350, 350,
+         350]
 game.create_spaces(50, rents)
 
 game.create_player("Player 1", 1000)
 game.create_player("Player 2", 1000)
-game.create_player("Player 3", 1000)
+
 
 game.move_player("Player 1", 6)
 game.buy_space("Player 1")
 game.move_player("Player 2", 6)
+game.move_player("Player 2", 6)
+game.move_player("Player 2", 6)
+game.move_player("Player 2", 6)
+game.move_player("Player 2", 6)
+game.move_player("Player 2", 2)
+game.move_player("Player 2", 6)
+game.move_player("Player 2", 6)
+game.move_player("Player 2", 6)
+game.move_player("Player 2", 6)
+game.move_player("Player 2", 2)
+game.move_player("Player 2", 6)
+game.move_player("Player 2", 6)
+game.move_player("Player 2", 6)
+game.move_player("Player 2", 6)
+game.move_player("Player 2", 2)
+game.move_player("Player 2", 6)
+game.move_player("Player 2", 6)
+game.move_player("Player 2", 6)
+game.move_player("Player 2", 6)
+game.move_player("Player 2", 2)
 
 print(game.get_player_account_balance("Player 1"))
 print(game.get_player_account_balance("Player 2"))
