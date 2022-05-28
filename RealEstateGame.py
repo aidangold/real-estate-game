@@ -113,7 +113,7 @@ class Player:
         self._name = name
         self._balance = initial_balance
         self._properties = {}
-        self._position = 0
+        self._position = "GO"
 
     def get_name(self):
         """ returns the player's name """
@@ -172,6 +172,5 @@ class Property:
     def get_property_name(self):
         """ returns the property name """
         return self._name
-
 
 
