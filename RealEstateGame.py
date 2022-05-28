@@ -68,8 +68,9 @@ class RealEstateGame:
         if 1 <= roll_num <= 6:  # verifies the number is on a 6 sided die
             current = target.get_position()
             new_pos = current + roll_num
-            if new_pos > 25:  # when position would exceed the length of the game board, we circle to the front
-                new_pos = int(new_pos) - 26
+            target.set_position(new_pos)
+            if target.get_position() > 25:  # when position would exceed the length of the game board
+                new_pos = new_pos - 26
                 account = target.get_balance()
                 target.set_balance(account + self._go_money)
                 target.set_position(new_pos)
@@ -172,3 +173,4 @@ class Property:
     def get_property_name(self):
         """ returns the property name """
         return self._name
+
