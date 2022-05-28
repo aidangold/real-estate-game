@@ -26,8 +26,12 @@ class RealEstateGame:
         """ adds to the player dict a Player object with the name as they key and the Player object as the value """
         self._players[name] = Player(name, balance)
 
-    def get_player_account_balance(self, name) -> int:
-        """ Returns the account balance of the player that matches the name parameter """
+    def get_player_account_balance(self, name: str) -> int:
+        """
+        Returns the account balance of the player that matches the name parameter
+        :param: name (str): unique name for player object.
+        :returns: balance (int): integer value of player's remaining balance.
+        """
         target = self._players[name]
         return target.get_balance()
 
