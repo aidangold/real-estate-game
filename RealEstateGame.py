@@ -70,7 +70,7 @@ class RealEstateGame:
             new_pos = current + roll_num
             target.set_position(new_pos)
             if target.get_position() > 25:  # when position would exceed the length of the game board
-                new_pos -= 26
+                new_pos = new_pos - 26
                 account = target.get_balance()
                 target.set_balance(account + self._go_money)
                 target.set_position(new_pos)
@@ -83,6 +83,8 @@ class RealEstateGame:
                 owner_bal = owner.get_balance()
                 amount = real_estate.get_rent()
                 tenant.set_balance(tenant_bal - amount)
+                owner.set_balance(owner_bal + amount)
+
                 if tenant.get_balance() <= 0:  # if this is the case we will set them inactive
                     tenant.clear_properties()
                     for listing in self._game_board:  # remove tenant from owner of all properties
