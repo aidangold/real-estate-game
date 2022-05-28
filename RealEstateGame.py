@@ -48,7 +48,7 @@ class RealEstateGame:
         real_estate = self._game_board[position]
         if target.get_balance() > real_estate.get_cost():
             real_estate.set_owner(name)  # changes owner of the property to the player
-            new_bal = int(target.get_balance()) - int(real_estate.get_cost())
+            new_bal = target.get_balance() - real_estate.get_cost()
             target.set_balance(new_bal)
             return True
         else:
@@ -69,7 +69,7 @@ class RealEstateGame:
             current = target.get_position()
             new_pos = current + roll_num
             if new_pos > 25:  # when position would exceed the length of the game board, we circle to the front
-                new_pos = new_pos - 26
+                new_pos = int(new_pos) - 26
                 account = target.get_balance()
                 target.set_balance(account + self._go_money)
                 target.set_position(new_pos)
@@ -172,4 +172,3 @@ class Property:
     def get_property_name(self):
         """ returns the property name """
         return self._name
-
