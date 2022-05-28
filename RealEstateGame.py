@@ -9,10 +9,12 @@ class RealEstateGame:
     def __init__(self):
         self._game_board = []
         self._players = {}
+        self._go_money = 0
 
     def create_spaces(self, go_money, rents):
         """ creates the game spaces for properties and rent, with the amount players receive on landing/passing go """
         count = 0
+        self._go_money = go_money
         go = Property("GO", go_money)
         self._game_board.append(go)
         for rent in rents:
@@ -62,7 +64,39 @@ class RealEstateGame:
         amount. Then when the player gets to their new spot it will check to see if that spot's property is owned,
         if it is the player will owe money to the player associated with that property in the correct amount. If the
         player's balance would reduce to 0 or below, then that player will become in active."""
-        pass
+        target = self._players[name]
+        if target.get_balance == 0:
+            return
+        if 1 <= roll_num <= 6:  # verifies the number is on a 6 sided die
+            current = target.get_position()
+            new_pos = current + roll_num
+            if new_pos > 25:    # when position would exceed the length of the game board, we circle to the front
+                new_pos = new_pos - 26
+                account = target.get_balance()
+                target.set_balance(account + self._go_money)
+                target.set_position(new_pos)
+            position = target.get_position()
+            real_estate = self._game_board[position]
+            if real_estate.get_owner() is not None:
+                #owner_name = real_estate.get_owner()
+                tenant = target
+                tenant_bal = tenant.get_balance()
+                owner = self._players[real_estate.get_owner()]
+                owner_bal = owner.get_balance()
+                amount = real_estate.get_rent()
+                tenant.set_balance(tenant_bal - amount)
+                if tenant.get_balance() <= 0:  # if this is the case we will set them inactive
+                    tenant.clear_properties()
+                    for listing in self._game_board:  # remove tenant from owner of all properties
+                        if listing.get_owner() == tenant.get_name():
+                            listing.set_owner(None)
+
+
+
+
+
+
+
 
     def check_game_over(self):
         """ This method will check if the game is over by seeing is there is only one player left as active with
@@ -96,10 +130,17 @@ class Player:
         """ returns player's properties """
         return self._properties
 
+    def clear_properties(self):
+        """ allows the change and setting of the properties a player owns """
+        self._properties.clear()
+
     def get_position(self):
         """ returns player's position on the game board """
         return self._position
 
+    def set_position(self, new_pos):
+        """ sets the position of the player to a new value """
+        self._position = new_pos
 
 class Property:
     """ class to represent each property object that will be bought and used on spaces """
@@ -122,6 +163,10 @@ class Property:
         """ returns the cost of the property if it were to be purchased by a player """
         return self._cost
 
+    def get_owner(self):
+        """ returns the owner of the property """
+        return self._owner
+
     def get_property_name(self):
         """ returns the property name """
         return self._name
@@ -129,10 +174,18 @@ class Property:
 
 game = RealEstateGame()
 
-rents = [50, 50, 50, 75, 75, 75, 100, 100, 100, 150, 150, 150, 200, 200, 200, 250, 250, 250, 300, 300, 300, 350, 350,
-         350]
+rents = [50, 50, 50, 75, 75, 75, 100, 100, 100, 150, 150, 150, 200, 200, 200, 250, 250, 250, 300, 300, 300, 350, 350, 350]
 game.create_spaces(50, rents)
+
 game.create_player("Player 1", 1000)
 game.create_player("Player 2", 1000)
 game.create_player("Player 3", 1000)
-game.get_player_account_balance("Player 2")
+
+game.move_player("Player 1", 6)
+game.buy_space("Player 1")
+game.move_player("Player 2", 6)
+
+print(game.get_player_account_balance("Player 1"))
+print(game.get_player_account_balance("Player 2"))
+
+print(game.check_game_over())
