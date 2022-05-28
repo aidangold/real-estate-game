@@ -46,9 +46,9 @@ class RealEstateGame:
         target = self._players[name]
         position = target.get_position()
         real_estate = self._game_board[position]
-        if target.get_balance() > real_estate.get_cost():
+        if self.get_player_account_balance(name) > real_estate.get_cost():
             real_estate.set_owner(name)  # changes owner of the property to the player
-            new_bal = target.get_balance() - real_estate.get_cost()
+            new_bal = self.get_player_account_balance(name) - real_estate.get_cost()
             target.set_balance(new_bal)
             return True
         else:
@@ -63,7 +63,7 @@ class RealEstateGame:
         if it is the player will owe money to the player associated with that property in the correct amount. If the
         player's balance would reduce to 0 or below, then that player will become in active."""
         target = self._players[name]
-        if target.get_balance == 0:
+        if self.get_player_account_balance(name) == 0:
             return
         if 1 <= roll_num <= 6:  # verifies the number is on a 6 sided die
             current = target.get_position()
@@ -71,7 +71,7 @@ class RealEstateGame:
             target.set_position(new_pos)
             if target.get_position() > 25:  # when position would exceed the length of the game board
                 new_pos = new_pos - 26
-                account = target.get_balance()
+                account = self.get_player_account_balance(name)
                 target.set_balance(account + self._go_money)
                 target.set_position(new_pos)
             position = target.get_position()
@@ -85,7 +85,7 @@ class RealEstateGame:
                 tenant.set_balance(tenant_bal - amount)
                 owner.set_balance(owner_bal + amount)
 
-                if tenant.get_balance() <= 0:  # if this is the case we will set them inactive
+                if self.get_player_account_balance(name) <= 0:  # if this is the case we will set them inactive
                     tenant.clear_properties()
                     for listing in self._game_board:  # remove tenant from owner of all properties
                         if listing.get_owner() == tenant.get_name():
