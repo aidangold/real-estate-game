@@ -48,7 +48,7 @@ class RealEstateGame:
         real_estate = self._game_board[position]
         if target.get_balance() > real_estate.get_cost():
             real_estate.set_owner(name)  # changes owner of the property to the player
-            new_bal = target.get_balance() - real_estate.get_cost()
+            new_bal = int(target.get_balance()) - int(real_estate.get_cost())
             target.set_balance(new_bal)
             return True
         else:
