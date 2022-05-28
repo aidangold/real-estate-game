@@ -103,9 +103,9 @@ class RealEstateGame:
         losers = []
         winner = []
         for name in names:
-            if self._players[name].get_balance() <= 0:
+            if self.get_player_account_balance(name) <= 0:
                 losers.append(name)
-            if self._players[name].get_balance() > 0:
+            if self.get_player_account_balance(name) > 0:
                 winner.append(name)
         if len(winner) == 1:
             return winner[0]
