@@ -26,7 +26,7 @@ class RealEstateGame:
         """ adds to the player dict a Player object with the name as they key and the Player object as the value """
         self._players[name] = Player(name, balance)
 
-    def get_player_account_balance(self, name):
+    def get_player_account_balance(self, name) -> int:
         """ Returns the account balance of the player that matches the name parameter """
         target = self._players[name]
         return target.get_balance()
@@ -66,8 +66,6 @@ class RealEstateGame:
         if target.get_balance == 0:
             return
         if 1 <= roll_num <= 6:  # verifies the number is on a 6 sided die
-            if target.get_position() == "GO":
-                target.set_position(0)
             current = target.get_position()
             new_pos = current + roll_num
             target.set_position(new_pos)
@@ -118,7 +116,7 @@ class Player:
         self._name = name
         self._balance = initial_balance
         self._properties = {}
-        self._position = "GO"
+        self._position = 0
 
     def get_name(self):
         """ returns the player's name """
