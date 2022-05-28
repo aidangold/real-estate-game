@@ -70,7 +70,7 @@ class RealEstateGame:
             new_pos = current + roll_num
             target.set_position(new_pos)
             if target.get_position() > 25:  # when position would exceed the length of the game board
-                new_pos = new_pos - 26
+                new_pos -= 26
                 account = target.get_balance()
                 target.set_balance(account + self._go_money)
                 target.set_position(new_pos)
