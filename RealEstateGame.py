@@ -72,8 +72,7 @@ class RealEstateGame:
         if 1 <= roll_num <= 6:  # verifies the number is on a 6 sided die
             current = target.get_position()
             new_pos = current + roll_num
-            target.set_position(new_pos)
-            if target.get_position() > 25:  # when position would exceed the length of the game board
+            if new_pos > 25:  # when position would exceed the length of the game board
                 new_pos = new_pos - 26
                 account = self.get_player_account_balance(name)
                 target.set_balance(account + self._go_money)
@@ -180,3 +179,20 @@ class Property:
         """ returns the property name """
         return self._name
 
+game = RealEstateGame()
+
+rents = [50, 50, 50, 75, 75, 75, 100, 100, 100, 150, 150, 150, 200, 200, 200, 250, 250, 250, 300, 300, 300, 350, 350, 350]
+game.create_spaces(50, rents)
+
+game.create_player("Player 1", 1000)
+game.create_player("Player 2", 1000)
+game.create_player("Player 3", 1000)
+
+game.move_player("Player 1", 6)
+game.buy_space("Player 1")
+game.move_player("Player 2", 6)
+
+print(game.get_player_account_balance("Player 1"))
+print(game.get_player_account_balance("Player 2"))
+
+print(game.check_game_over())
