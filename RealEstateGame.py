@@ -39,7 +39,7 @@ class RealEstateGame:
         """ this method similar to the above will use a given player's name and call to the Player class object and
         using the get_position method it will return the integer position on the board of that player. """
         target = self._players[name]
-        return target.get_name()
+        return target.get_position()
 
     def buy_space(self, name):
         """ using the name of a player this method will allow that player to buy the property object of the index they
