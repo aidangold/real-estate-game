@@ -73,18 +73,15 @@ class RealEstateGame:
             return
         if 1 <= roll_num <= 6:  # verifies the number is on a 6 sided die
             current = target.get_position()
-            print(current + roll_num)
 
             if current + roll_num > 24:  # when position would exceed the length of the game board
                 new_pos = current + roll_num - 25
                 account = self.get_player_account_balance(name)
                 target.set_balance(account + self._go_money)
                 target.set_position(new_pos)
-                print("INSIDE")
             else:
                 target.set_position(current + roll_num)
             position = target.get_position()
-            print("IM PRINTING POSITION:" + str(position))
             real_estate = self._game_board[position]
 
             if real_estate.get_owner() is not None:
