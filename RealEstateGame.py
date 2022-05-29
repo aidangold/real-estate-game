@@ -76,7 +76,7 @@ class RealEstateGame:
             print(current + roll_num)
 
             if current + roll_num > 24:  # when position would exceed the length of the game board
-                new_pos = current + roll_num - 26
+                new_pos = current + roll_num - 25
                 account = self.get_player_account_balance(name)
                 target.set_balance(account + self._go_money)
                 target.set_position(new_pos)
