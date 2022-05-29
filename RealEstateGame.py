@@ -1,7 +1,7 @@
 # Author: Aidan Goldstein
 # Github username: aidangold
-# Date: TODO
-# Description: TODO
+# Date: 05/29/2022
+# Description: Create a program that copies basic functions of the Monopoly game.
 
 class RealEstateGame:
     """ Class to represent the game object """
