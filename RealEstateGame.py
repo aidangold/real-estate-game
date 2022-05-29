@@ -130,7 +130,7 @@ class Player:
         """ returns the player's name """
         return self._name
 
-    def get_balance(self):
+    def get_balance(self) -> int:
         """ returns player's balance """
         return self._balance
 
@@ -146,7 +146,7 @@ class Player:
         """ allows the change and setting of the properties a player owns """
         self._properties.clear()
 
-    def get_position(self):
+    def get_position(self) -> int:
         """ returns player's position on the game board """
         return self._position
 
@@ -168,11 +168,11 @@ class Property:
         """ sets the owner of the property to the player who purchased it """
         self._owner = player
 
-    def get_rent(self):
+    def get_rent(self) -> int:
         """ returns the rent amount for the property """
         return self._rent
 
-    def get_cost(self):
+    def get_cost(self) -> int:
         """ returns the cost of the property if it were to be purchased by a player """
         return self._cost
 
