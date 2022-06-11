@@ -91,6 +91,8 @@ class RealEstateGame:
                 owner_bal = owner.get_balance()
                 amount = real_estate.get_rent()
                 tenant.set_balance(tenant_bal - amount)
+                if tenant.get_balance() < 0:
+                    tenant.set_balance(0)
                 owner.set_balance(owner_bal + amount)
 
                 if self.get_player_account_balance(name) <= 0:  # if this is the case we will set them inactive
