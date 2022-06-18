@@ -3,6 +3,11 @@
 # Date: 05/29/2022
 # Description: Create a program that copies basic functions of the Monopoly game.
 
+import tkinter as tk
+
+window = tk.Tk()
+
+
 class RealEstateGame:
     """ Class to represent the game object """
 
